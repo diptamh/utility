@@ -14,8 +14,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Deploy to Dokku
-        uses: dokku/github-action@master
-        with:
-          git_remote_url: 'ssh://dokku@195.35.7.145:22/utility'
-          ssh_private_key: ${{ secrets.DOKKU_SSH_KEY }}
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DOKKU_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 195.35.7.145 >> ~/.ssh/known_hosts
+
+      - name: Push to Dokku
+        run: |
+          git remote add dokku ssh://dokku@195.35.7.145:22/utility
+          git push dokku main:main --force
