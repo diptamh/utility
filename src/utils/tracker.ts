@@ -13,7 +13,8 @@ export function trackPageView(path: string) {
 
     try {
         if (navigator.sendBeacon) {
-            navigator.sendBeacon('/api/track', JSON.stringify(data));
+            const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+            navigator.sendBeacon('/api/track', blob);
         } else {
             fetch('/api/track', {
                 method: 'POST',
