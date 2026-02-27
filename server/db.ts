@@ -1,5 +1,10 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const DB_PATH = process.env.DB_PATH || path.join(process.cwd(), 'data', 'analytics.db');
 
@@ -9,7 +14,6 @@ export function getDb(): Database.Database {
     if (!db) {
         // Ensure data directory exists
         const dir = path.dirname(DB_PATH);
-        const fs = require('fs');
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
         db = new Database(DB_PATH);

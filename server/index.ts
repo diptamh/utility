@@ -1,7 +1,11 @@
 import express from 'express';
 import compression from 'compression';
 import path from 'path';
-import statsRouter from './routes/stats';
+import { fileURLToPath } from 'url';
+import statsRouter from './routes/stats.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;

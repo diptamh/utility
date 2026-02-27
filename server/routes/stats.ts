@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { createHash } from 'crypto';
-import { recordView, getStats } from '../db';
+import { recordView, getStats } from '../db.js';
 
 const router = Router();
 
